@@ -6,7 +6,7 @@
     [clojure.tools.namespace.repl :refer [refresh refresh-all]]
     [clojure.spec.alpha :as spec]
 
-    [processing-scratch.template :as pscore]))
+    [processing-scratch.genart.ex1-1 :refer [ex1-1]]))
 
 (spec/check-asserts true)
 
