@@ -6,7 +6,8 @@
     [clojure.tools.namespace.repl :refer [refresh refresh-all]]
     [clojure.spec.alpha :as spec]
 
-    [processing-scratch.genart.ex1-1 :refer [ex1-1]]))
+    [processing-scratch.genart.ex1-1 :refer [ex1-1]]
+    [processing-scratch.genart.ex4-2 :refer [ex4-2]]))
 
 (spec/check-asserts true)
 

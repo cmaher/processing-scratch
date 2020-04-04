@@ -107,7 +107,7 @@
                            (r/simplex (+ noise-x (* x-idx noise-step))
                                     (+ noise-y (* y-idx noise-step))
                                     noise-z)))))
-    (q/save-frame "frames/#####.png")
+    ;(q/save-frame "frames/#####.png")
     ))
 
 (defn mouse-pressed [state _event]
@@ -120,7 +120,7 @@
   (q/defsketch
     genart-1-1-app
     :title "such example"
-    :size [1024 1024]
+    :size [512 512]
     :renderer :p3d
     :setup setup
     :mouse-pressed mouse-pressed
