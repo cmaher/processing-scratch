@@ -7,7 +7,8 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [quil "3.1.0"]
                  [org.clojure/data.generators "0.1.2"]
-                 [com.github.kilianB/pcg-java-8 "1.0.1"]]
+                 [com.github.kilianB/pcg-java-8 "1.0.1"]
+                 [amalloy/ring-buffer "1.3.1"]]
   :java-cmd "java8.bat"
   :java-source-paths ["java"]
   :profiles {:dev {:source-paths ["dev"]
