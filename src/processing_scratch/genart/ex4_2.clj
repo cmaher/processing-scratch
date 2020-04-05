@@ -4,6 +4,10 @@
             [processing-scratch.middleware :as middleware]
             [amalloy.ring-buffer :refer [ring-buffer]]))
 
+; Why does this look 3d?
+; 1. gradual light-to-dark looks like shading
+; 2. the light-to-dark while switching back and forth makes it look layered
+
 ; without high anti-aliasing, diamond artifacts are extreme
 ; To make it even smoother, I could implement FXAA as a custom shader
 ;   https://forum.processing.org/two/discussion/12840/antialiasing-in-processing
