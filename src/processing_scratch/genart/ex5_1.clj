@@ -40,18 +40,22 @@
       (q/fill grey alpha)
       (q/ellipse 0 0 edge-size (/ edge-size 2)))))
 
-(defn- initial-state [draw-noise-key]
-  (let [state {:start-x (q/random 1000)
-               :start-y (q/random 1000)
-               :noise-step-x 0.1
-               :noise-step-y 0.1
-               :step-x 5
-               :step-y 5
-               :default-background #(q/background 255)
-               :default-stroke #(q/stroke 0)
-               :default-fill #(q/fill 255)
-               :draw-noise draw-noise-key}]
-    (case draw-noise-key
+(defn- initial-state [opts]
+  (let [state (merge {:start-x (q/random 1000)
+                      :start-y (q/random 1000)
+                      :noise-z (q/random 1000)
+                      :noise-step-x 0.1
+                      :noise-step-y 0.1
+                      :noise-step-z 0.1
+                      :step-x 5
+                      :step-y 5
+                      :default-background #(q/background 255)
+                      :default-stroke #(q/stroke 0)
+                      :default-fill #(q/fill 255)
+                      :type :alpha
+                      :animate false}
+                     opts)]
+    (case (:type state)
       :alpha (assoc state
                :noise-step-x 0.01
                :noise-step-y 0.01
@@ -68,7 +72,7 @@
         ys (vec (range 0 (q/height) (:step-y state)))
         noise-idx (fn [init step step-size]
                     (+ (state init) (* (state step) step-size)))
-        draw-noise (case (:draw-noise state)
+        draw-noise (case (:type state)
                      :alpha draw-noise-alpha
                      :squares draw-noise-squares
                      :lines draw-noise-lines
@@ -84,7 +88,9 @@
               pos-y (ys y)
               noise-x (noise-idx :start-x :noise-step-x x)
               noise-y (noise-idx :start-y :noise-step-y y)
-              noise (q/noise noise-x noise-y)]
+              noise (if (:animate state)
+                      (q/noise noise-x noise-y (:noise-z state))
+                      (q/noise noise-x noise-y))]
           (draw-noise state pos-x pos-y noise))))))
 
 ; try trimetric noise grid?
@@ -94,21 +100,22 @@
                 :seed seed)]
     (println (str "Seed: " seed))
     (q/random-seed seed)
-    (q/frame-rate 1)
+    (q/frame-rate 10)
     (apply q/set-state! (flatten (vec state)))))
 
 (defn- update-state [state]
-  state)
+  (assoc state
+    :noise-z (+ (:noise-z state) (:noise-step-z state))))
 
 (defn- draw [state]
   (draw-noise-grid state))
 
-(defn sketch [draw-noise-key]
+(defn sketch [opts]
   (q/defsketch
     sketch-app
     :title "processing-scratch.genart.ex5-1"
     :settings settings
-    :setup (partial setup draw-noise-key)
+    :setup (partial setup opts)
     :update update-state
     :draw draw
     :size [300 300]
